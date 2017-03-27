@@ -22,7 +22,7 @@ object ProjectsGenerator extends AutoPlugin {
         else backendType
       val projectId = s"nd4j-$platform-$idItem"
 
-      Project(projectId, file(".nd4j-platform") / projectId).settings(
+      Project(projectId, file(".nd4j-backends") / projectId).settings(
         classpathTypes += "maven-plugins",
         libraryDependencies += "org.nd4j" % s"nd4j-$backendType" % nd4jVersion classifier platform excludeAll ExclusionRule(
           organization = "org.bytedeco.javacpp-presets"),
@@ -36,7 +36,7 @@ object ProjectsGenerator extends AutoPlugin {
       generateProject(platform, backendType)
     }
 
-    Project("nd4j-platform", file(".nd4j-platform") / "nd4j-platform")
+    Project("nd4j-backends", file(".nd4j-backends") / "nd4j-backends")
       .settings(crossPaths := false)
       .dependsOn(subProjects.map(p => p: ClasspathDep[ProjectReference]): _*) :: subProjects
   }
